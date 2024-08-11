@@ -41,6 +41,7 @@ pipeline {
                     fi
                 npm test
                 '''
+                // npm test will run some tests after the build stage
             }
         }
     }
