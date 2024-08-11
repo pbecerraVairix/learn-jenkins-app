@@ -33,6 +33,7 @@ pipeline {
                         echo "file doesn't exist"
                         exit 2
                     fi
+                npm ci
                 npm test
                 '''
             }
