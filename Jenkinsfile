@@ -45,4 +45,10 @@ pipeline {
             }
         }
     }
+
+    post{
+        always{ //it will run with success and error
+            junit 'test-results/junit.xml' //creates a JUnit test report
+        }
+    }
 }
