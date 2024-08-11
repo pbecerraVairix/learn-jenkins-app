@@ -44,6 +44,22 @@ pipeline {
                 // npm test will run some tests after the build stage
             }
         }
+        stage('E2E'){
+            agent{
+                docker{
+                    image 'mcr.microsoft.com/playwright:v1.46.0-jammy'
+                    reuseNode true
+                }
+            }
+            steps{
+                sh '''
+                    npm install -g serve
+                    serve -s build
+                    npx playwright test
+                '''
+                // first it will be a server instaled (the build stage is necesary) and then a test with playworght will be used
+            }
+        }
     }
 
     post{
