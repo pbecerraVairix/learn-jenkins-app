@@ -11,6 +11,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    echo "Build stage"
                     ls -la
                     node --version
                     npm --version
@@ -19,6 +20,21 @@ pipeline {
                     ls -la
                 '''
                 //'node ci' is like npm install
+            }
+        }
+        stage('Test'){
+            steps{
+                sh '''
+                    echo "Test stage"
+                    if test -f build/index.html
+                    then
+                        echo "file exists"
+                    else
+                        echo "file doesn't exist"
+                        exit 2
+                    fi
+                npm test
+                '''
             }
         }
     }
