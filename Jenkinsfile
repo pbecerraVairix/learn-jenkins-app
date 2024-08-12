@@ -53,8 +53,8 @@ pipeline {
             }
             steps{
                 sh '''
-                    npm install -g serve
-                    serve -s build
+                    npm install serve
+                    node_modules/.bin/serve -s build
                     npx playwright test
                 '''
                 // first it will be a server instaled (the build stage is necesary) and then a test with playworght will be used
