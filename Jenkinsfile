@@ -66,6 +66,8 @@ pipeline {
     post{
         always{ //it will run with success and error
             junit 'jest-results/junit.xml' //creates a JUnit test report
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            //this line it's generated with the Pipeline Syntax 
         }
     }
 }
