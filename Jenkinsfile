@@ -55,7 +55,7 @@ pipeline {
                 sh '''
                     npm install serve
                     node_modules/.bin/serve -s build & 
-                    sleep 5
+                    sleep 10
                     npx playwright test
                 '''
                 // first it will be a server instaled (the build stage is necesary) and then a test with playworght will be used
