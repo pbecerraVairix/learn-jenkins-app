@@ -71,12 +71,12 @@ pipeline {
                             sleep 10
                             npx playwright test --reporter=html
                         '''
-                        // first it will be a server instaled (the build stage is necesary) and then a test with playworght will be used
+                        // the other steps are not necesary because they are running in Netlify
                     }
 
                     post{
                         always{ //it will run with success and error
-                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Local', reportTitles: '', useWrapperFileDirectly: true])
                             //this line it's generated with the Pipeline Syntax 
                         }
                     }
@@ -101,6 +101,34 @@ pipeline {
                 '''
                 //--dir sets the directory to deploy
                 //--prod deploy to production
+            }
+        }
+        stage('Production E2E'){
+            agent{
+                docker{
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                    reuseNode true
+                }
+            }
+
+            environment{
+                CI_ENVIRONMENT_URL = 'https://66ba3d602c58d1d77723caf0--delightful-tartufo-ff34b0.netlify.app'
+            }
+            //This variable is used in playwright.config.
+            //This is necesary in order to let know Netlify where the tests must be run.
+
+            steps{
+                sh '''
+                    npx playwright test --reporter=html
+                '''
+                // first it will be a server instaled (the build stage is necesary) and then a test with playworght will be used
+            }
+
+            post{
+                always{ //it will run with success and error
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright E2E', reportTitles: '', useWrapperFileDirectly: true])
+                    //this line it's generated with the Pipeline Syntax 
+                }
             }
         }
     }      
