@@ -65,12 +65,12 @@ pipeline {
                     }
                 }
                 stage('E2E'){
-                    agent{
-                        docker{
+                    //agent{
+                        //docker{
                             //image 'my-playwright'
                             //reuseNode true
-                        }
-                    }
+                        //}
+                    //}
                     steps{
                         sh '''
                             npm install serve
