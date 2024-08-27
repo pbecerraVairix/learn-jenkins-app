@@ -67,8 +67,8 @@ pipeline {
                 stage('E2E'){
                     agent{
                         docker{
-                            image 'my-playwright'
-                            reuseNode true
+                            //image 'my-playwright'
+                            //reuseNode true
                         }
                     }
                     steps{
