@@ -10,6 +10,7 @@ pipeline {
         stage('Docker'){
             steps{
                 sh'docker build -t my-playwright .'
+                //my-playwright will be the name of the docker build. It can be used in other stages
             }
         }
 
@@ -66,7 +67,7 @@ pipeline {
                 stage('E2E'){
                     agent{
                         docker{
-                            image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                            image 'my-playwright'
                             reuseNode true
                         }
                     }
@@ -112,7 +113,7 @@ pipeline {
         stage('Production E2E'){
             agent{
                 docker{
-                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                    image 'my-playwright'
                     reuseNode true
                 }
             }
